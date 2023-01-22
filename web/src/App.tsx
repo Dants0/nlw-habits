@@ -1,15 +1,11 @@
-import Habits from "./components/Habits"
+// import Habits from "./components/Habits"
 import './styles/global.css'
 
-function App() {
+import { Home } from './Page/Home'
+
+export function App() {
 
   return (
-    <>
-      <Habits completed={3} />
-      <Habits completed={2} />
-      <Habits completed={3} />
-    </>
+    <Home/>
   )
 }
-
-export default App
