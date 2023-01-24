@@ -8,24 +8,24 @@ const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S']
 
 const summaryDates = generateRangeDates()
 
-const minimumDatesSize = 18*7
+const minimumDatesSize = 18 * 7
 const amountOfDays = minimumDatesSize - summaryDates.length
 
 type Summary = {
     id: string;
     date: string;
-    amount: number; 
+    amount: number;
     completed: number;
 }[]
 
 export function Summary() {
     const [summary, setSummary] = useState<Summary>([])
 
-    useEffect(()=>{
-        api.get('/summary').then(response=>{
+    useEffect(() => {
+        api.get('/summary').then(response => {
             setSummary(response.data)
         })
-    },[])
+    }, [])
 
 
 
@@ -44,26 +44,26 @@ export function Summary() {
 
 
             <div className="grid grid-rows-7 grid-flow-col gap-3">
-                {summaryDates.map(date => {
-                    const dayInSummary = summary.find(day=>{
+                {summary.length > 0 && summaryDates.map(date => {
+                    const dayInSummary = summary.find(day => {
                         return dayjs(date).isSame(day.date, 'day')
                     })
 
                     return (
-                    <HabitsDays
-                    key={date.toString()} 
-                    date={date}
-                    amount={dayInSummary?.amount} 
-                    completed={dayInSummary?.completed} 
-                    />
+                        <HabitsDays
+                            key={date.toString()}
+                            date={date}
+                            amount={dayInSummary?.amount}
+                            defaultCompleted={dayInSummary?.completed}
+                        />
                     )
                 })}
 
-                {amountOfDays > 0 && Array.from({length: amountOfDays}).map((_, i) => {
+                {amountOfDays > 0 && Array.from({ length: amountOfDays }).map((_, i) => {
                     return (
-                        <div 
-                        key={i}
-                        className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg opacity-40 cursor-not-allowed"></div>
+                        <div
+                            key={i}
+                            className="w-10 h-10 bg-zinc-900 border-2 border-zinc-800 rounded-lg opacity-40 cursor-not-allowed"></div>
                     )
                 })}
             </div>
